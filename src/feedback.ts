@@ -1,10 +1,27 @@
 export class BBFeedback {
   public static load(config: any = {}): void {
-    const iframeElement : HTMLIFrameElement = document.createElement('iframe');
+
+    // Create the iframe.
+    const iframeElement: HTMLIFrameElement = document.createElement('iframe');
     iframeElement.frameBorder = '0';
-    iframeElement.width = '100px';
+    iframeElement.width = '200px';
     iframeElement.height = '100px';
-    iframeElement.setAttribute('src', 'https://host.nxt.blackbaud.com/stache2/');
+    iframeElement.setAttribute('src', 'https://host.nxt.blackbaud.com/feedback/');
     document.body.appendChild(iframeElement);
+
+    // Listen for messages from the iframe.
+    window.addEventListener('message', (event) => {
+      if (event.origin !== 'https://host.nxt.blackbaud.com') {
+        return;
+      }
+
+      if (event.data.source === 'feedback') {
+        console.log('Message received from iframe!', event.data.message);
+        iframeElement.contentWindow.postMessage({
+          message: 'Hello, iframe!',
+          source: 'feedback-parent'
+        }, '*');
+      }
+    }, false);
   }
 }
