@@ -5,7 +5,7 @@
   "main": "dist/bundles/feedback-client.umd.js",
   "module": "index.ts",
   "engines": {
-    "node": ">=6.3.1"
+    "node": ">=6.11.1"
   },
   "repository": {
     "type": "git",
