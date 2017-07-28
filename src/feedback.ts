@@ -11,6 +11,7 @@ export class BBFeedback {
 
     // Listen for messages from the iframe.
     window.addEventListener('message', (event) => {
+      console.log('message event:', event);
       if (event.origin !== 'https://host.nxt.blackbaud.com') {
         return;
       }
@@ -18,7 +19,16 @@ export class BBFeedback {
       if (event.data.source === 'feedback') {
         console.log('Message received from iframe!', event.data.message);
         iframeElement.contentWindow.postMessage({
-          message: 'Hello, iframe!',
+          response: {
+            url: location.href,
+            product: 'engineering-system-docs',
+            user: {
+              id: 'abc123',
+              first_name: 'Steve',
+              last_name: 'Brush',
+              email: 'steve.brush@blackbaud.com'
+            }
+          },
           source: 'feedback-parent'
         }, '*');
       }
