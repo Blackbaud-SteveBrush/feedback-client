@@ -6,15 +6,17 @@ export class BBFeedback {
     .sky-feedback-placeholder {
       box-sizing: border-box;
       position: fixed;
-      bottom: 5px;
-      left: 5px;
+      bottom: 0px;
+      left: 0px;
       overflow: hidden;
-      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+      box-shadow: 0 4px 9px rgba(0, 0, 0, 0.35);
+      border: 1px solid #e2e2e2;
+      border-top: 1px solid #eee;
       transition: all 500ms;
       padding: ${padding}px;
       background-color: #fbfbfb;
       z-index: 99999;
-      width: 300px;
+      width: 280px;
       height: 1px;
       opacity: 0;
     }
@@ -43,10 +45,12 @@ export class BBFeedback {
     div.appendChild(iframeElement);
     document.body.appendChild(div);
 
-    const setDimensions = (elem: any, width: number, height: number) => {
+    const setDimensions = (elem: any, height: number) => {
       elem.style.height = `${height + padding * 2 + 2}px`;
       elem.style.opacity = 1;
-      // elem.style.width = `${width + (padding * 2) + 2}px`;
+      elem.style.left = `${padding}px`;
+      elem.style.bottom = `${padding}px`;
+      // elem.style.width = `${width + padding * 2 + 2}px`;
     };
 
     // Listen for messages from the iframe.
@@ -60,7 +64,7 @@ export class BBFeedback {
 
         if (event.data.feedbackHeight) {
           console.log('change the height!', event.data.feedbackHeight);
-          setDimensions(div, event.data.feedbackWidth, event.data.feedbackHeight);
+          setDimensions(div, event.data.feedbackHeight);
         }
 
         console.log('Message received from iframe!', event.data);
