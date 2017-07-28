@@ -63,8 +63,12 @@ export class BBFeedback {
       if (event.data.source === 'feedback') {
 
         if (event.data.feedbackHeight) {
-          console.log('change the height!', event.data.feedbackHeight);
           setDimensions(div, event.data.feedbackHeight);
+        }
+
+        if (event.data.actionType === 'close') {
+          div.style.opacity = '0';
+          div.style.height = `0px`;
         }
 
         console.log('Message received from iframe!', event.data);
